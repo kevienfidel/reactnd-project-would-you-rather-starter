@@ -50,7 +50,7 @@ class TakePoll extends Component {
                             </Col>
                         </Row>
                         <Row className='question'>
-                            <Col md={6} style={{ height: '500px'}}>
+                            <Col md={6} style={{height: '500px'}}>
                                 <button className='button button1'
                                         onClick={(e) =>
                                             this.handleClick(e, {
@@ -59,7 +59,7 @@ class TakePoll extends Component {
                                                 qid: questionId
                                             })}>{questions[questionId].optionOne.text}</button>
                             </Col>
-                            <Col md={6} style={{ height: '500px'}}>
+                            <Col md={6} style={{height: '500px'}}>
                                 <button className='button button1'
                                         onClick={(e) =>
                                             this.handleClick(e, {
@@ -90,22 +90,22 @@ class TakePoll extends Component {
                                 <h3 className='center'>Would you rather... </h3>
                             </Col>
                         </Row>
-                        <Row>
-                            <span>You answered: {answer}</span>
-                        </Row>
 
-                        <Row className='question'>
-                            <Col componentClass='center' md={6} style={{height: '500px'}}>
-                                <h1>{parseInt((questions[questionId].optionOne.votes.length / Object.keys(users).length) * 100)}% </h1>
-                                <p>Votes: {questions[questionId].optionOne.votes.length}</p>
-                                <p>{questions[questionId].optionOne.text}</p>
-
+                        <Row className='options'>
+                            <Col  className={answer === questions[questionId].optionOne.text ? 'selected' : ''} md={6} style={{height: '480px'}}>
+                                <div>
+                                    <h1>{parseInt((questions[questionId].optionOne.votes.length / Object.keys(users).length) * 100)}% </h1>
+                                    <p>Votes: {questions[questionId].optionOne.votes.length}</p>
+                                    <p>{questions[questionId].optionOne.text}</p>
+                                </div>
 
                             </Col>
-                            <Col componentClass='center' md={6} style={{ height: '500px'}}>
-                                <h1>{parseInt((questions[questionId].optionTwo.votes.length / Object.keys(users).length) * 100)}% </h1>
-                                <p>Votes: {questions[questionId].optionTwo.votes.length}</p>
-                                <p>{questions[questionId].optionTwo.text}</p>
+                            <Col className={answer === questions[questionId].optionTwo.text ? 'selected' : ''} md={6} style={{height: '480px'}}>
+                                <div >
+                                    <h1>{parseInt((questions[questionId].optionTwo.votes.length / Object.keys(users).length) * 100)}% </h1>
+                                    <p>Votes: {questions[questionId].optionTwo.votes.length}</p>
+                                    <p>{questions[questionId].optionTwo.text}</p>
+                                </div>
                             </Col>
                         </Row>
                     </Fragment>
