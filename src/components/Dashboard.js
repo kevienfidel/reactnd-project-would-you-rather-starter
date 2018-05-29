@@ -21,8 +21,6 @@ class Dashboard extends Component {
     render() {
         const {category} = this.state
         const {unansweredPolls, answeredPolls} = this.props
-        console.log('unanswered: ', unansweredPolls)
-        console.log('answered: ', answeredPolls)
 
         return (
             <Grid>
