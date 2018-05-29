@@ -13,6 +13,28 @@ body {
     font-weight: bold;
 }
 
+
+.user-list{
+    list-style-type: none;
+    padding: 10px;
+    text-decoration: none;
+    align-items: center;
+
+    width: 100%;
+    max-width: 250px;
+
+    display: flex;
+    margin: 2px auto;
+
+    border-radius: 3px;
+
+
+}
+.user-list:hover{
+    cursor: pointer;
+
+}
+
 .nav ul {
     display: flex;
     flex-direction: row;
@@ -23,7 +45,6 @@ body {
 .nav li:first-child {
     padding-left: 0;
 }
-
 
 ul {
     padding-left: 0;

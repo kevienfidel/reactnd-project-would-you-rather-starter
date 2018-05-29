@@ -23,3 +23,15 @@ export function saveQuestionAnswer(info){
 export function saveQuestion(info){
     return _saveQuestion(info)
 }
+
+export const fakeAuth = {
+    isAuthenticated: false,
+    authenticate(cb) {
+        this.isAuthenticated = true;
+        setTimeout(cb, 100); // fake async
+    },
+    signout(cb) {
+        this.isAuthenticated = false;
+        setTimeout(cb, 100);
+    }
+};

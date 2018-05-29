@@ -46,7 +46,6 @@ class Leaderboard extends Component {
     }
 }
 
-
 function mapStateToProps({users}) {
     const usersId = Object.keys(users)
     const rankings = usersId.map((id) => ({

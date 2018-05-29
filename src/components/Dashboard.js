@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import Question from './Question'
 import {Grid, Row, Col} from 'react-bootstrap'
+import {createSelector} from 'reselect'
 
 class Dashboard extends Component {
 
@@ -15,12 +16,13 @@ class Dashboard extends Component {
         this.setState(() => ({
             category
         }))
-
     }
 
     render() {
         const {category} = this.state
         const {unansweredPolls, answeredPolls} = this.props
+        console.log('unanswered: ', unansweredPolls)
+        console.log('answered: ', answeredPolls)
 
         return (
             <Grid>
@@ -48,18 +50,30 @@ class Dashboard extends Component {
     }
 }
 
-function mapStateToProps({users, questions, authedUser}) {
-    const answeredPolls = Object.keys(users[authedUser].answers)
-    const questionsId = Object.keys(questions)
-    const unansweredPolls = questionsId.filter((id) => (!answeredPolls.includes(id)))
+const getUnansweredPolls = createSelector(
+    state => state.questions,
+    state => Object.keys(state.users[state.authedUser].answers),
+    state => Object.keys(state.questions),
+    (questions, answeredPolls, questionsId) => questionsId.filter((id) => (!answeredPolls.includes(id)))
         .sort((a, b) => questions[b].timestamp - questions[a].timestamp)
+)
 
+const getAnsweredPolls = createSelector(
+    state => state.questions,
+    state => Object.keys(state.users[state.authedUser].answers),
+    (questions, answers) => answers.sort((a, b) => questions[b].timestamp - questions[a].timestamp)
+)
+
+
+function mapStateToProps(state) {
+    const {users, questions} = state
     return {
         users,
         questions,
-        answeredPolls,
-        unansweredPolls
+        answeredPolls: getAnsweredPolls(state),
+        unansweredPolls: getUnansweredPolls(state)
     }
 }
+
 
 export default connect(mapStateToProps)(Dashboard)

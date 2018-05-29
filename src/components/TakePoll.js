@@ -1,7 +1,6 @@
 import React, {Component, Fragment} from 'react'
 import {handleSaveAnswer} from '../actions/questions'
 import {connect} from 'react-redux'
-import {Redirect} from 'react-router-dom'
 import {Grid, Row, Col} from 'react-bootstrap'
 import Nav from './Nav'
 
@@ -16,12 +15,15 @@ class TakePoll extends Component {
     }
 
     render() {
-        const {questionId, users, questions, isAnswered, answer, authedUser} = this.props
-        console.log(this.props)
+        const {questionId, users, questions, isAnswered, answer, authedUser, questionNotFound, totalVotes} = this.props
 
-        if (!authedUser) {
+        if (questionNotFound) {
             return (
-                <Redirect to='/'/>
+                <Grid>
+                    <Nav/>
+                    <div className='center'>Error 404: Question not found.</div>
+
+                </Grid>
             )
         }
 
@@ -92,17 +94,19 @@ class TakePoll extends Component {
                         </Row>
 
                         <Row className='options'>
-                            <Col  className={answer === questions[questionId].optionOne.text ? 'selected' : ''} md={6} style={{height: '480px'}}>
+                            <Col className={answer === questions[questionId].optionOne.text ? 'selected' : ''} md={6}
+                                 style={{height: '480px'}}>
                                 <div>
-                                    <h1>{parseInt((questions[questionId].optionOne.votes.length / Object.keys(users).length) * 100)}% </h1>
+                                    <h1>{parseInt((questions[questionId].optionOne.votes.length / totalVotes) * 100)}% </h1>
                                     <p>Votes: {questions[questionId].optionOne.votes.length}</p>
                                     <p>{questions[questionId].optionOne.text}</p>
                                 </div>
 
                             </Col>
-                            <Col className={answer === questions[questionId].optionTwo.text ? 'selected' : ''} md={6} style={{height: '480px'}}>
-                                <div >
-                                    <h1>{parseInt((questions[questionId].optionTwo.votes.length / Object.keys(users).length) * 100)}% </h1>
+                            <Col className={answer === questions[questionId].optionTwo.text ? 'selected' : ''} md={6}
+                                 style={{height: '480px'}}>
+                                <div>
+                                    <h1>{parseInt((questions[questionId].optionTwo.votes.length / totalVotes) * 100)}% </h1>
                                     <p>Votes: {questions[questionId].optionTwo.votes.length}</p>
                                     <p>{questions[questionId].optionTwo.text}</p>
                                 </div>
@@ -118,14 +122,16 @@ class TakePoll extends Component {
 function mapStateToProps({users, questions, authedUser,}, props) {
     const {questionId} = props.match.params
     const isAnswered = authedUser ? !!users[authedUser].answers[questionId] : false
-    const answer = isAnswered ? questions[questionId][users[authedUser].answers[questionId]].text : null
+
     return {
         users,
         questions,
         questionId,
         authedUser,
         isAnswered,
-        answer
+        answer: isAnswered ? questions[questionId][users[authedUser].answers[questionId]].text : null,
+        questionNotFound: !questions[questionId],
+        totalVotes: isAnswered? questions[questionId].optionOne.votes.length + questions[questionId].optionTwo.votes.length: 0
     }
 }
 

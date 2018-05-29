@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {NavLink} from 'react-router-dom'
 import {connect} from 'react-redux'
 
 class Nav extends Component {
@@ -7,7 +8,7 @@ class Nav extends Component {
             <nav className='nav'>
                 <ul>
                     <li>
-                        <NavLink to={`/home/authedUser/${this.props.authedUser}`} exact activeClassName='active'>
+                        <NavLink to={'/home'} exact activeClassName='active'>
                             Home
                         </NavLink>
                     </li>

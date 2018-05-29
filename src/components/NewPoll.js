@@ -53,7 +53,7 @@ class NewPoll extends Component {
                 </Row>
                 <Row>
                     <Col md={4}>
-                        <h1>Would you rather...</h1>
+                        <h2>Would you rather...</h2>
                     </Col>
                     <Col md={8}>
                         <form className='new-question' onSubmit={this.handleSubmit}>
